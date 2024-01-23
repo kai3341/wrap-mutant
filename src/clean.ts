@@ -1,7 +1,14 @@
-import { extractTargetSymbol, toggleWrapperSymbol, Surrogate } from "./constants";
+import { extractTargetSymbol, toggleWrapperSymbol } from "./constants";
 
-export const clean = <T>(target: T & Surrogate<T>) => {
+export type HasBothMixin<T> = {
+  [extractTargetSymbol]?: HasBoth<T>;
+  [toggleWrapperSymbol]?: Generator<HasBoth<T>, never, unknown>;
+};
+
+export type HasBoth<T> = T & HasBothMixin<T>;
+
+export const clean = <T>(target: HasBoth<T>) => {
   delete target[toggleWrapperSymbol];
   delete target[extractTargetSymbol];
-  return target as T
+  return target as T;
 };

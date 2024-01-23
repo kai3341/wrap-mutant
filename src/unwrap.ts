@@ -1,3 +1,7 @@
-import { extractTargetSymbol, HasTarget, HasWrapperGen } from "./constants";
+import { extractTargetSymbol } from "./constants";
 
-export const unwrap = <T>(target: T & (HasTarget<T> | HasWrapperGen<T>)) => target[extractTargetSymbol];
+import type { HasTarget } from "./simple";
+import type { HasWrapperGen } from "./caching";
+
+export const unwrap = <T>(target: HasTarget<T> | HasWrapperGen<T>) =>
+  target[extractTargetSymbol];

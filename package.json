@@ -1,6 +1,6 @@
 {
   "name": "wrap-mutant",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Allow object mutation and changing its reference without recreating",
   "scripts": {
     "build": "tsc -b",
@@ -8,8 +8,6 @@
   },
   "author": "AI Kavalevich",
   "license": "MIT",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "files": [
     "dist/"
   ],
@@ -20,7 +18,8 @@
   "keywords": [
     "Typescript",
     "mutation",
-    "react"
+    "reference",
+    "wrap"
   ],
   "homepage": "https://github.com/kai3341/wrap-mutant#readme",
   "devDependencies": {

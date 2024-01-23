@@ -1,9 +1,16 @@
-import { extractTargetSymbol, options, HasTarget } from "./constants";
+import { extractTargetSymbol, options } from "./constants";
+
+export type TargetMixin<T> = {
+  [extractTargetSymbol]: HasTarget<T>;
+};
+
+export type HasTarget<T> = T & TargetMixin<T>;
 
 export const wrap = <T>(target: T) => {
-  const newTarget = target as T & HasTarget<T>;
+  const newTarget = target as HasTarget<T>;
   newTarget[extractTargetSymbol] = newTarget;
   return new Proxy(newTarget, options);
-}
+};
 
-export const rewrap = <T>(target: T & HasTarget<T>) => new Proxy(target[extractTargetSymbol], options);
+export const rewrap = <T>(target: HasTarget<T>) =>
+  new Proxy(target[extractTargetSymbol], options);
