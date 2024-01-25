@@ -1,28 +1,27 @@
 {
-  "name": "wrap-mutant",
-  "version": "0.1.1",
   "description": "Allow object mutation and changing its reference without recreating",
   "scripts": {
-    "build": "tsc -b",
-    "prepublish": "tsc -b"
+    "build": "lerna run --scope \"@wrap-mutant/*\" build"
   },
   "author": "AI Kavalevich",
   "license": "MIT",
-  "files": [
-    "dist/"
-  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kai3341/wrap-mutant.git"
   },
   "keywords": [
+    "wrap-mutant",
     "Typescript",
     "mutation",
     "reference",
     "wrap"
   ],
-  "homepage": "https://github.com/kai3341/wrap-mutant#readme",
+  "homepage": "https://github.com/kai3341/wrap-mutant",
   "devDependencies": {
+    "lerna": "^8.0.2",
     "typescript": "^5.3.3"
-  }
+  },
+  "workspaces": [
+    "./packages/*/"
+  ]
 }

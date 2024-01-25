@@ -1,0 +1,35 @@
+{
+  "name": "@wrap-mutant/utils",
+  "version": "0.0.1",
+  "description": "Allow object mutation and changing its reference without recreating",
+  "main": "./src/index.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.pkg.json",
+    "postbuild": "node ../../packagePostBuild.mjs",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "wrap-mutant",
+    "Typescript",
+    "mutation",
+    "reference",
+    "wrap"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kai3341/wrap-mutant.git",
+    "directory": "packages/utils"
+  },
+  "author": "AI Kavalevich",
+  "license": "MIT",
+  "homepage": "https://github.com/kai3341/wrap-mutant",
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  },
+  "exports": {
+    "default": "./src/index.ts",
+    "require": "./src/index.ts",
+    "import": "./src/index.ts",
+    "types": "./src/index.ts"
+  }
+}

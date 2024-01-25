@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "target": "ES2017",
+    // "module": "CommonJS",
+    "module": "esnext",
+    "lib": ["ES2017"],
+    "declaration": true,
+    // "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true
+    // "noEmit": true,
+  },
+  "exclude": [
+    //
+    // "**/*.test.ts",
+    // "**/*.stub.ts",
+    "node_modules/",
+    "dist/"
+  ]
+}

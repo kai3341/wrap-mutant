@@ -20,8 +20,5 @@ export const wrapCached = <T>(target: T, count = 3) => {
   return cached[count - 1];
 };
 
-export const toggleCached = <T>(target: HasWrapperGen<T>) => {
-  const gen = target[toggleWrapperSymbol];
-  const next = gen.next();
-  return next.value;
-};
+export const toggleCached = <T>(target: HasWrapperGen<T>) =>
+  target[toggleWrapperSymbol].next().value;
