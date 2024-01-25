@@ -12,7 +12,7 @@ Solution is in wrapping that big or complex objects into [Proxy][MDNProxy] objec
 
 This API is naive and very easy to explain the root idea, but I see no reason to use it on the production.
 
-```
+```javascript
 import { wrap, unwrap, rewrap } from "@wrap-mutant/core";
 ```
 
@@ -30,7 +30,7 @@ And `rewrap` is synonym of `wrap(unwrap(target))`. I've put it into single funct
 
 And I hope just this API you will use in you production. Usage is almost the same, but it works in a bit different way. Instead of creating `new Proxy()` object on each mutation we can pre-create batch [Proxy][MDNProxy] objects and then rotate tham via roundrobin algothythm. It means the cost of the each reference update becomes a zero.
 
-```
+```javascript
 import { wrapCached, toggleCached, unwrap } from "@wrap-mutant/core";
 ```
 
@@ -50,7 +50,7 @@ Some API is universal. Normally you don't need in it, but this door should exist
 
 Allows to extract wrapped object. As you seen earlier works both with API V1 and V2. Normally you don't need to use this API
 
-```
+```javascript
 import { unwrap } from "@wrap-mutant/core";
 ```
 
@@ -58,7 +58,7 @@ import { unwrap } from "@wrap-mutant/core";
 
 Cleanup the target object from this library additional hidden `Symbol()` fields. Works both with API V1 and API V2. Before `clean`ing it wold be good idea to `unwrap` the target object (you have to do it yourself). Normally you don't need to use this API
 
-```
+```javascript
 import { clean } from "@wrap-mutant/core";
 ```
 

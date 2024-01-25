@@ -14,7 +14,7 @@ This package contains react integration
 
 > // Just this example is untested yet
 
-```
+```javascript
 import React, { useCallback, useEffect, useState } from react;
 import { useWMState } from "@wrap-mutant/react";
 import { bindCallables } from "@wrap-mutant/utils";

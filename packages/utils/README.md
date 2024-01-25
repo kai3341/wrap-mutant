@@ -14,7 +14,7 @@ This package contains utility toolbox created to simplify your life and this lib
 
 Unfortunally there is a negative effect of wrapping objects into [Proxy][MDNProxy] object -- the wrapped object's methods loose their's `this`. So, if you have wrapped the object and got an error like `this is undefined` -- just bind the callables.
 
-```
+```javascript
 import { bindCallables } from "@wrap-mutant/utils";
 ```
 
