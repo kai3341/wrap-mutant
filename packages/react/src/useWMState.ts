@@ -1,16 +1,29 @@
-import { useMemo, useState, useCallback } from "react";
-import { wrap, toggle, HasWrapperGen, bindCallables } from "./externals";
+import { useMemo, useState } from "react";
+import { wrap, toggle, bindCallables, HasWrapperGen } from "./externals";
 
-export type WMStateOptions<A> = {
+export type WMStateOptions<A, D> = {
   bind?: boolean;
-  deps?: any[];
+  deps?: D[];
   args?: A;
   count?: number;
 };
 
+type UseStateReturning<T> = [
+  HasWrapperGen<T>,
+  (value: HasWrapperGen<T>) => void,
+];
+
+type FactoryFNArgs<A> = A | undefined;
+type FactoryFN<A, T> = (args: FactoryFNArgs<A>) => T;
+
+function updateWMState<T>(this: UseStateReturning<T>) {
+  const [state, setState] = this;
+  setState(toggle(state));
+}
+
 const WMStateFactory = <A, T>(
-  factory: (args: A | undefined) => T,
-  args: A | undefined,
+  factory: FactoryFN<A, T>,
+  args: FactoryFNArgs<A>,
   bind: boolean,
   count?: number,
 ) => {
@@ -19,19 +32,19 @@ const WMStateFactory = <A, T>(
   return wrap(value, count);
 };
 
-export const useWMState = <A, T>(
-  factory: (args: A | undefined) => T,
-  { deps = [], bind = false, args, count }: WMStateOptions<A> = {},
+export const useWMState = <A, D, T>(
+  factory: FactoryFN<A, T>,
+  { deps = [], bind = false, args, count }: WMStateOptions<A, D> = {},
 ) => {
-  const wrappedValue = useMemo(
-    () => WMStateFactory(factory, args, bind, count),
-    deps,
-  );
-  const [state, setState] = useState(wrappedValue);
+  const value = useMemo(() => WMStateFactory(factory, args, bind, count), deps);
 
-  const updateState = useCallback(
-    (value: HasWrapperGen<T>) => setState(toggle(value)),
-    [setState],
+  const stateData = useState(value);
+  const [state] = stateData;
+
+  const updateState = useMemo(
+    // prettier-ignore
+    () => (updateWMState<T>).bind(stateData),
+    stateData,
   );
 
   return [state, updateState] as const;

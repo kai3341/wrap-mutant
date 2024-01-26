@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
-    "target": "ES2017",
+    "target": "ES5",
     // "module": "CommonJS",
-    "module": "esnext",
-    "lib": ["ES2017"],
+    "module": "AMD",
+    "lib": ["DOM", "DOM.Iterable", "ES2017"],
     "declaration": true,
     // "allowJs": true,
     "skipLibCheck": true,

@@ -25,7 +25,7 @@ export const Blackboard = () => {
   const writeRecord = useCallback(
     () => {
       records.push("I will not skateboard in the halls.");
-      updateRecords(records);
+      updateRecords();
     },
     [records, setRecords],
   );

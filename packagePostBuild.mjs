@@ -10,16 +10,11 @@ const descDir = join(__dirname, "dist", pkgName);
 
 const handlePackageJSON = async () => {
   const package_json = "package.json";
-  const indexJS = "./index.js";
 
   const packageJSON = JSON.parse(await readFile(join(srcDir, package_json)));
 
-  packageJSON.exports = {
-    import: indexJS,
-    types: "./index.d.ts",
-  };
-
-  packageJSON.main = indexJS;
+  packageJSON.exports = { types: "./index.d.ts" };
+  packageJSON.main = "./index.js";
 
   await writeFile(
     join(descDir, package_json),
