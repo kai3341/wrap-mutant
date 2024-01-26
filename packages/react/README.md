@@ -18,7 +18,7 @@ This package contains react integration
 import React, { useCallback, useEffect, useState } from react;
 import { useWMState } from "@wrap-mutant/react";
 
-const BlackboardInner = () => {
+export const Blackboard = () => {
   const [ records, updateRecords ] = useWMState(() => [], { bind: true });
   const [ updateInterval, setUpdateInterval ] = useState(null);
 
