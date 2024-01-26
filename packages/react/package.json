@@ -26,11 +26,11 @@
   "homepage": "https://github.com/kai3341/wrap-mutant",
   "devDependencies": {
     "typescript": "^5.3.3",
-    "@types/react": "^18.2.48"
+    "@types/react": ">=16.8"
   },
   "dependencies": {
     "@wrap-mutant/core": "^0.0.1",
-    "react": ">=15"
+    "react": ">=16.8"
   },
   "exports": {
     "default": "./src/index.ts",

@@ -51,6 +51,7 @@ API reference:
 - **Optional** options: `object`:
 - - `deps`: **Optional** dependency `Array`, passed directly [useMemo](https://react.dev/reference/react/useMemo#usememo). **Default**: `[]`
 - - `bind`: **Optional** `boolean` flag should we call utility `bindCallables` defined at [@wrap-mutant/util](https://github.com/kai3341/wrap-mutant/tree/main/packages/utils)
+- - `args`: **Optional** `any` generic parameter passed into factory `function` (first parameter). Allows you to move complicated factory functions outside your `FunctionalComponent` closure to improve your code readability and performance
 
 # Any questions?
 

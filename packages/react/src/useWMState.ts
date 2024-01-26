@@ -2,22 +2,27 @@ import { useMemo, useState, useCallback } from "react";
 import { wrapCached, toggleCached, HasWrapperGen } from "@wrap-mutant/core";
 import { bindCallables } from "@wrap-mutant/utils";
 
-export type WMStateOptions = {
+export type WMStateOptions<A> = {
   bind?: boolean;
   deps?: any[];
+  args?: A;
 };
 
-const WMStateFactory = <T>(factory: () => T, bind: boolean) => {
-  const value = factory();
+const WMStateFactory = <A, T>(
+  factory: (args: A) => T,
+  args: A,
+  bind: boolean,
+) => {
+  const value = factory(args);
   if (bind) bindCallables(value);
   return wrapCached(value);
 };
 
-export const useWMState = <T>(
+export const useWMState = <A, T>(
   factory: () => T,
-  { deps = [], bind = false }: WMStateOptions = {},
+  { deps = [], bind = false, args }: WMStateOptions<A> = {},
 ) => {
-  const wrappedValue = useMemo(() => WMStateFactory(factory, bind), deps);
+  const wrappedValue = useMemo(() => WMStateFactory(factory, args, bind), deps);
   const [state, setState] = useState(wrappedValue);
 
   const updateState = useCallback(
