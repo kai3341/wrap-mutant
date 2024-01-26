@@ -27,14 +27,15 @@ export const Blackboard = () => {
       records.push("I will not skateboard in the halls.");
       updateRecords(records);
     },
-    [records, setRecords]
+    [records, setRecords],
   );
 
   useEffect(
     () => {
       setUpdateInterval(setInterval(writeRecord, 250));
       return () => clearInterval(updateInterval);
-    }
+    },
+    [],
   );
 
   const renderedRecords = records.map(
