@@ -1,6 +1,5 @@
 import { useMemo, useState, useCallback } from "react";
-import { wrapCached, toggleCached, HasWrapperGen } from "@wrap-mutant/core";
-import { bindCallables } from "@wrap-mutant/utils";
+import { wrap, toggle, HasWrapperGen, bindCallables } from "./externals";
 
 export type WMStateOptions<A> = {
   bind?: boolean;
@@ -10,18 +9,18 @@ export type WMStateOptions<A> = {
 };
 
 const WMStateFactory = <A, T>(
-  factory: (args: A) => T,
-  args: A,
+  factory: (args: A | undefined) => T,
+  args: A | undefined,
   bind: boolean,
   count?: number,
 ) => {
   const value = factory(args);
   if (bind) bindCallables(value);
-  return wrapCached(value, count);
+  return wrap(value, count);
 };
 
 export const useWMState = <A, T>(
-  factory: () => T,
+  factory: (args: A | undefined) => T,
   { deps = [], bind = false, args, count }: WMStateOptions<A> = {},
 ) => {
   const wrappedValue = useMemo(
@@ -31,7 +30,7 @@ export const useWMState = <A, T>(
   const [state, setState] = useState(wrappedValue);
 
   const updateState = useCallback(
-    (value: HasWrapperGen<T>) => setState(toggleCached(value)),
+    (value: HasWrapperGen<T>) => setState(toggle(value)),
     [setState],
   );
 

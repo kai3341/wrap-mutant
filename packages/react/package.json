@@ -25,11 +25,12 @@
   "license": "MIT",
   "homepage": "https://github.com/kai3341/wrap-mutant",
   "devDependencies": {
-    "typescript": "^5.3.3",
-    "@types/react": ">=16.8"
+    "@types/react": ">=16.8",
+    "typescript": "^5.3.3"
   },
   "dependencies": {
     "@wrap-mutant/core": "^0.0.1",
+    "@wrap-mutant/utils": "^0.0.1",
     "react": ">=16.8"
   },
   "exports": {

@@ -15,8 +15,6 @@ const handlePackageJSON = async () => {
   const packageJSON = JSON.parse(await readFile(join(srcDir, package_json)));
 
   packageJSON.exports = {
-    default: indexJS,
-    require: indexJS,
     import: indexJS,
     types: "./index.d.ts",
   };

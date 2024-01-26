@@ -1,2 +1,2 @@
-export { wrapCached as wrap, toggleCached as toggle } from "@wrap-mutant/core";
+export * from "./externals";
 export * from "./useWMState";
