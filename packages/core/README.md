@@ -2,7 +2,7 @@
 
 Object mutation is easy and extremelly fast. But such libraries like react make us to rebuild objects on every their change. It's not a problem on simple and small objects. When your object is a big array, your application become slow. When you are trying to handle complicated deeply nested object, it becomes a brain cancer.
 
-Solution is in wrapping that big or complex objects into [Proxy][MDNProxy] object.
+Solution is in wrapping that big or complex objects into [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) object.
 
 > // TODO: create an example application aimed to explain how to use this library and benchmarking
 
@@ -28,15 +28,15 @@ And `rewrap` is synonym of `wrap(unwrap(target))`. I've put it into single funct
 
 # API V2
 
-And I hope just this API you will use in you production. Usage is almost the same, but it works in a bit different way. Instead of creating `new Proxy()` object on each mutation we can pre-create batch [Proxy][MDNProxy] objects and then rotate tham via roundrobin algothythm. It means the cost of the each reference update becomes a zero.
+And I hope just this API you will use in you production. Usage is almost the same, but it works in a bit different way. Instead of creating `new Proxy()` object on each mutation we can pre-create batch [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) objects and then rotate tham via roundrobin algothythm. It means the cost of the each reference update becomes a zero.
 
 ```javascript
 import { wrapCached, toggleCached, unwrap } from "@wrap-mutant/core";
 ```
 
-Difference between `wrap` and `wrapCached` usage is the `wrapCached` accepts additional optional argument `count` meaning how many [Proxy][MDNProxy] objects will be pre-created. By default `count=3`. There is no point to make it less then `2`, but you may pass more if you need.
+Difference between `wrap` and `wrapCached` usage is the `wrapCached` accepts additional optional argument `count` meaning how many [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) objects will be pre-created. By default `count=3`. There is no point to make it less then `2`, but you may pass more if you need.
 
-And `toggleCached` usage is the same as `rewrap`, but it returns next pre-created [Proxy][MDNProxy] object.
+And `toggleCached` usage is the same as `rewrap`, but it returns next pre-created [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) object.
 
 > // TODO: put here animated SVG explaining the idea
 
@@ -67,5 +67,3 @@ import { clean } from "@wrap-mutant/core";
 # Any questions?
 
 Don't be afraid to open this library source code -- it's really small (54 lines)
-
-[MDNProxy]: (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy)
