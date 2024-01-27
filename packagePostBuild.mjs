@@ -13,7 +13,7 @@ const handlePackageJSON = async () => {
 
   const packageJSON = JSON.parse(await readFile(join(srcDir, package_json)));
 
-  packageJSON.exports = { types: "./index.d.ts" };
+  delete packageJSON.exports;
   packageJSON.main = "./index.js";
 
   await writeFile(

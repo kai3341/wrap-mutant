@@ -12,41 +12,40 @@ This package contains react integration
 
 # useWMState
 
-> // Just this example is untested yet
+Classical example. We have avoided rebuilding on each render potencially large array. State update complexity does not depends on array size and always happens by `O(1)`
 
-```javascript
-import React, { useCallback, useEffect, useState } from react;
+```typescript
+import React, { useCallback, useEffect } from "react";
 import { useWMState } from "@wrap-mutant/react";
 
+const recordFactory = () => [] as string[];
+
 export const Blackboard = () => {
-  const [ records, updateRecords ] = useWMState(() => [], { bind: true });
-  const [ updateInterval, setUpdateInterval ] = useState(null);
+  const [records, updateRecords] = useWMState(recordFactory, { bind: true });
 
-  const writeRecord = useCallback(
-    () => {
-      records.push("I will not skateboard in the halls.");
-      updateRecords();
-    },
-    [records, setRecords],
-  );
+  const writeRecord = useCallback(() => {
+    records.push("I will not skateboard in the halls.");
+    updateRecords();
+  }, [records, updateRecords]);
 
-  useEffect(
-    () => {
-      setUpdateInterval(setInterval(writeRecord, 250));
-      return () => clearInterval(updateInterval);
-    },
-    [],
-  );
+  useEffect(() => {
+    const interval = setInterval(writeRecord, 250);
+    return () => clearInterval(interval); // eslint-disable-next-line
+  }, []);
 
-  const renderedRecords = records.map(
-    (item, index) => <div className="line" key={index}>{item}</div>
-  );
+  const renderedRecords = records.map((item, index) => (
+    <div className="line" key={index}>
+      {item}
+    </div>
+  ));
 
-  return <>{renderedRecords}</>;
+  return <div className="board">{renderedRecords}</div>;
 };
 ```
 
-API reference:
+It's possible to avoid all loops in this component via pushing into records array rendered `JSX.Element` instead of string. But keep in mind it's dirty hack.
+
+## API reference:
 
 - **Required** factory `function`, passed directly [useMemo](https://react.dev/reference/react/useMemo#usememo)
 - **Optional** options: `object`:
