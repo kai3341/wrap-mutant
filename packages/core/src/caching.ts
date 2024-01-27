@@ -8,7 +8,7 @@ export type WrapperGenMixin<T> = {
 export type HasWrapperGen<T> = T & WrapperGenMixin<T>;
 
 // Initially it was generator, but ES5 generator polyfill is too large
-const toggleCachedGenerator = <T>(cached: T[]) => {
+const toggleCachedGenerator = /*#__PURE__*/ <T>(cached: T[]) => {
   return () => {
     const next = cached.shift() as T;
     cached.push(next);
@@ -16,7 +16,7 @@ const toggleCachedGenerator = <T>(cached: T[]) => {
   };
 };
 
-export const wrapCached = <T>(target: T, count = 3) => {
+export const wrapCached = /*#__PURE__*/ <T>(target: T, count = 3) => {
   const cached: HasWrapperGen<T>[] = [];
   const newTarget = target as HasWrapperGen<T>;
   for (let i = 0; i < count; i++) cached.push(new Proxy(newTarget, options));
@@ -25,5 +25,5 @@ export const wrapCached = <T>(target: T, count = 3) => {
   return cached[count - 1];
 };
 
-export const toggleCached = <T>(target: HasWrapperGen<T>) =>
+export const toggleCached = /*#__PURE__*/ <T>(target: HasWrapperGen<T>) =>
   target[toggleWrapperSymbol]();

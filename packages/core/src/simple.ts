@@ -6,11 +6,11 @@ export type TargetMixin<T> = {
 
 export type HasTarget<T> = T & TargetMixin<T>;
 
-export const wrap = <T>(target: T) => {
+export const wrap = /*#__PURE__*/ <T>(target: T) => {
   const newTarget = target as HasTarget<T>;
   newTarget[extractTargetSymbol] = newTarget;
   return new Proxy(newTarget, options);
 };
 
-export const rewrap = <T>(target: HasTarget<T>) =>
+export const rewrap = /*#__PURE__*/ <T>(target: HasTarget<T>) =>
   new Proxy(target[extractTargetSymbol], options);

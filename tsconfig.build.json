@@ -1,8 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES5",
-    // "module": "CommonJS",
-    "module": "AMD",
+    "module": "ES2015",
     "lib": ["DOM", "DOM.Iterable", "ES2017"],
     "declaration": true,
     // "allowJs": true,

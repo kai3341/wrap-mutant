@@ -7,7 +7,7 @@ export type HasBothMixin<T> = {
 
 export type HasBoth<T> = T & HasBothMixin<T>;
 
-export const clean = <T>(target: HasBoth<T>) => {
+export const clean = /*#__PURE__*/ <T>(target: HasBoth<T>) => {
   delete target[toggleWrapperSymbol];
   delete target[extractTargetSymbol];
   return target as T;

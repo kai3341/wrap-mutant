@@ -16,12 +16,12 @@ type UseStateReturning<T> = [
 type FactoryFNArgs<A> = A | undefined;
 type FactoryFN<A, T> = (args: FactoryFNArgs<A>) => T;
 
-function updateWMState<T>(this: UseStateReturning<T>) {
+/*#__PURE__*/ function updateWMState<T>(this: UseStateReturning<T>) {
   const [state, setState] = this;
   setState(toggle(state));
 }
 
-const WMStateFactory = <A, T>(
+const WMStateFactory = /*#__PURE__*/ <A, T>(
   factory: FactoryFN<A, T>,
   args: FactoryFNArgs<A>,
   bind: boolean,
@@ -32,7 +32,7 @@ const WMStateFactory = <A, T>(
   return wrap(value, count);
 };
 
-export const useWMState = <A, D, T>(
+export const useWMState = /*#__PURE__*/ <A, D, T>(
   factory: FactoryFN<A, T>,
   { deps = [], bind = false, args, count }: WMStateOptions<A, D> = {},
 ) => {
