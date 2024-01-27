@@ -2,13 +2,18 @@ import { extractTargetSymbol, toggleWrapperSymbol, options } from "./constants";
 
 export type WrapperGenMixin<T> = {
   [extractTargetSymbol]: HasWrapperGen<T>;
-  [toggleWrapperSymbol]: Generator<HasWrapperGen<T>, never, unknown>;
+  [toggleWrapperSymbol]: () => HasWrapperGen<T>;
 };
 
 export type HasWrapperGen<T> = T & WrapperGenMixin<T>;
 
-const toggleCachedGenerator = function* <T>(cached: T[]) {
-  while (true) for (const current of cached) yield current;
+// Initially it was generator, but ES5 generator polyfill is too large
+const toggleCachedGenerator = <T>(cached: T[]) => {
+  return () => {
+    const next = cached.shift() as T;
+    cached.push(next);
+    return next;
+  };
 };
 
 export const wrapCached = <T>(target: T, count = 3) => {
@@ -21,4 +26,4 @@ export const wrapCached = <T>(target: T, count = 3) => {
 };
 
 export const toggleCached = <T>(target: HasWrapperGen<T>) =>
-  target[toggleWrapperSymbol].next().value;
+  target[toggleWrapperSymbol]();
