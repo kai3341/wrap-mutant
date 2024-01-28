@@ -1,5 +1,5 @@
 import { join, sep } from "path";
-import { copyFile, readFile, writeFile } from "fs/promises";
+import { copyFile, readFile, writeFile, stat, cp } from "fs/promises";
 
 const __dirname = new URL(import.meta.url + "/..").pathname;
 
@@ -22,10 +22,29 @@ const handlePackageJSON = async () => {
   );
 };
 
+const copyImgDir = async () => {
+  const imgSrcPath = join(srcDir, "img");
+  let stats;
+  try {
+    stats = await stat(imgSrcPath);
+  } catch (e) {
+    if (e.code === "ENOENT") return;
+    throw e;
+  }
+  if (!stats.isDirectory())
+    throw new Error({
+      path: imgSrcPath,
+      description: "Expected directory, found something else",
+    });
+
+  await cp(imgSrcPath, join(descDir, "img"), { recursive: true });
+};
+
 const main = async () => {
   await Promise.all([
     copyFile(join(__dirname, "LICENSE"), join(descDir, "LICENSE")),
     copyFile(join(".", "README.md"), join(descDir, "README.md")),
+    copyImgDir(),
     handlePackageJSON(),
   ]);
 };
