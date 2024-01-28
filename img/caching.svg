@@ -1,0 +1,82 @@
+<svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+  <mask id="hideandshow" maskContentUnits="userSpaceOnUse">
+    <rect fill="black" width="100%" height="100%">
+      <animate
+        attributeName="fill"
+        calcMode="discrete"
+        dur="2s"
+        values="black;white"
+        repeatCount="indefinite"
+      />
+    </rect>
+    <rect fill="white" width="100%" height="100%">
+      <animate
+        attributeName="height"
+        values="100;100;0;0;0;0"
+        dur="2s"
+        repeatCount="indefinite"
+      />
+      <animate
+        attributeName="visibility"
+        calcMode="discrete"
+        values="visible;hidden"
+        dur="2s"
+        repeatCount="indefinite"
+      />
+    </rect>
+    <rect fill="black" width="100%" height="100%">
+      <animate
+        attributeName="height"
+        values="0;100;100;100;0;0"
+        dur="2s"
+        repeatCount="indefinite"
+      />
+      <animate
+        attributeName="visibility"
+        calcMode="discrete"
+        values="hidden;visible"
+        dur="2s"
+        repeatCount="indefinite"
+      />
+    </rect>
+  </mask>
+
+  <circle cx="90" cy="60" r="45" fill="none" stroke="grey" />
+  <circle cx="90" cy="60" r="50" fill="none" stroke="red" mask="url(#hideandshow)">
+      <animate
+        attributeName="stroke"
+        calcMode="discrete"
+        values="red;green;blue"
+        begin="1s"
+        dur="6s"
+        repeatCount="indefinite"
+      />
+  </circle>
+  <text x="154" y="65" fill="grey">
+    update
+    <animate
+      attributeName="fill"
+      calcMode="discrete"
+      begin="1.75s"
+      values="red;grey;grey;grey;grey"
+      dur="2s"
+      repeatCount="indefinite"
+    />
+  </text>
+  <path fill="none" stroke="grey" transform="translate(140 60)" d="M55 11H7.83l5.79-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H55z">
+    <animate
+      attributeName="stroke"
+      calcMode="discrete"
+      begin="1.75s"
+      values="red;grey;grey;grey;grey"
+      dur="2s"
+      repeatCount="indefinite"
+    />
+  </path>
+  <rect x="7" y="31" width="25" height="58" fill="none" stroke="grey" />
+  <path fill="none" stroke="grey" id="topleft" d="M90,10 V 5 H19 V31" />
+  <path fill="none" stroke="grey" id="bottomleft" d="M19,89 V115 H90 V110" />
+  <rect x="8" y="32" width="23" height="18" fill="red"></rect>
+  <rect x="8" y="51" width="23" height="18" fill="green"></rect>
+  <rect x="8" y="70" width="23" height="18" fill="blue"></rect>
+</svg>

@@ -18,11 +18,11 @@ import { wrap, unwrap, rewrap } from "@wrap-mutant/core";
 
 Actually `wrap` creates `new Proxy()` object which is `wrap`ping the original object. Also it creates hidden `Symbol()` field containing the original object.
 
-So it's obvious the `unwrap` just reads hidden `Sybbol()` property of wrapped object and returns its value. Keep in mind `unwrap` is also works with API V2.
+So it's obvious the `unwrap` just reads hidden `Symbol()` property of wrapped object and returns its value. Keep in mind `unwrap` is also works with API V2.
 
 And `rewrap` is synonym of `wrap(unwrap(target))`. I've put it into single function because of performance reason.
 
-> // TODO: put here animated SVG explaining the idea
+![API V1 explaination](../../img/simple.svg "rewrap")
 
 ---
 
@@ -38,7 +38,7 @@ Difference between `wrap` and `wrapCached` usage is the `wrapCached` accepts add
 
 And `toggleCached` usage is the same as `rewrap`, but it returns next pre-created [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) object.
 
-> // TODO: put here animated SVG explaining the idea
+![API V2 explaination](../../img/caching.svg "toggleCached")
 
 ---
 
