@@ -83,25 +83,62 @@
   <rect x="7" y="31" width="25" height="58" fill="none" stroke="grey" />
   <path fill="none" stroke="red" id="topleft" d="M90,9.5 V 5 H19 V31">
     <animate
-      begin="1.5s"
       attributeName="stroke"
       calcMode="discrete"
-      values="grey;red;grey;grey;green;grey;grey;blue;grey"
+      values="grey;blue;grey;grey;red;grey;grey;green;grey"
       dur="6s"
       repeatCount="indefinite"
     />
   </path>
   <path fill="none" stroke="grey" id="bottomleft" d="M19,89 V115 H90 V110.5">
     <animate
-      begin="0.25s"
       attributeName="stroke"
       calcMode="discrete"
-      values="grey;red;grey;grey;green;grey;grey;blue;grey"
+      values="grey;grey;red;grey;grey;green;grey;grey;blue"
       dur="6s"
       repeatCount="indefinite"
     />
   </path>
-  <rect x="8" y="32" width="23" height="18" fill="red"></rect>
-  <rect x="8" y="51" width="23" height="18" fill="green"></rect>
-  <rect x="8" y="70" width="23" height="18" fill="blue"></rect>
+  <rect x="8" y="85" width="23" height="18" fill="blue" opacity="0">
+    <animate
+      attributeName="y"
+      values="85;23;23;23;32;32;32;32;32;51;51;51;51;70;70;70;70;85;85;85"
+      dur="6s"
+      repeatCount="indefinite"
+    />
+    <animate
+      attributeName="opacity"
+      values="0;0;0;0;1;1;1;1;1;1;1;1;1;1;1;1;1;0;0;0"
+      dur="6s"
+      repeatCount="indefinite"
+    />
+  </rect>
+  <rect x="8" y="51" width="23" height="18" fill="red">
+    <animate
+      attributeName="y"
+      values="51;70;70;70;85;85;85;85;23;23;32;32;32;32;32;32;32;51;51;51"
+      dur="6s"
+      repeatCount="indefinite"
+    />
+    <animate
+      attributeName="opacity"
+      values="1;1;1;1;0;0;0;0;0;0;1;1;1;1;1;1;1;1;1;1"
+      dur="6s"
+      repeatCount="indefinite"
+    />
+  </rect>
+  <rect x="8" y="70" width="23" height="18" fill="green" >
+    <animate
+      attributeName="y"
+      values="32;32;32;51;51;51;51;70;70;70;70;85;85;85;85;23;23;23;32;32"
+      dur="6s"
+      repeatCount="indefinite"
+    />
+    <animate
+      attributeName="opacity"
+      values="1;1;1;1;1;1;1;1;1;1;1;0;0;0;0;0;0;0;1;1"
+      dur="6s"
+      repeatCount="indefinite"
+    />
+  </rect>
 </svg>
