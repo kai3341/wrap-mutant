@@ -22,7 +22,7 @@ So it's obvious the `unwrap` just reads hidden `Symbol()` property of wrapped ob
 
 And `rewrap` is synonym of `wrap(unwrap(target))`. I've put it into single function because of performance reason.
 
-![API V1 explaination](../../img/simple.svg "rewrap")
+![API V1 explaination](img/simple.svg "rewrap")
 
 ---
 
@@ -38,7 +38,7 @@ Difference between `wrap` and `wrapCached` usage is the `wrapCached` accepts add
 
 And `toggleCached` usage is the same as `rewrap`, but it returns next pre-created [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) object.
 
-![API V2 explaination](../../img/caching.svg "toggleCached")
+![API V2 explaination](img/caching.svg "toggleCached")
 
 ---
 

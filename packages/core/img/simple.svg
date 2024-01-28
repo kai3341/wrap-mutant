@@ -17,7 +17,7 @@
     <rect fill="white" width="100%" height="100%">
       <animate
         attributeName="height"
-        values="100;100;0;0;0;0"
+        values="100%;100%;0;0;0;0"
         dur="2s"
         repeatCount="indefinite"
       />
@@ -32,7 +32,7 @@
     <rect fill="black" width="100%" height="100%">
       <animate
         attributeName="height"
-        values="0;100;100;100;0;0"
+        values="0;100%;100%;100%;0;0"
         dur="2s"
         repeatCount="indefinite"
       />
@@ -51,9 +51,9 @@
       <animate
         attributeName="stroke"
         calcMode="discrete"
-        values="red;green;blue"
+        values="red;green;blue;yellow;magenta;cyan"
         begin="1s"
-        dur="6s"
+        dur="12s"
         repeatCount="indefinite"
       />
   </circle>
@@ -62,8 +62,9 @@
     <animate
       attributeName="fill"
       calcMode="discrete"
-      begin="1.75s"
-      values="red;grey;grey;grey;grey"
+      begin="1.9s"
+      keyTimes="0; 0.1"
+      values="red;grey"
       dur="2s"
       repeatCount="indefinite"
     />
@@ -72,16 +73,11 @@
     <animate
       attributeName="stroke"
       calcMode="discrete"
-      begin="1.75s"
-      values="red;grey;grey;grey;grey"
+      begin="1.9s"
+      keyTimes="0; 0.1"
+      values="red;grey"
       dur="2s"
       repeatCount="indefinite"
     />
   </path>
-  <rect x="7" y="31" width="25" height="58" fill="none" stroke="grey" />
-  <path fill="none" stroke="grey" id="topleft" d="M90,10 V 5 H19 V31" />
-  <path fill="none" stroke="grey" id="bottomleft" d="M19,89 V115 H90 V110" />
-  <rect x="8" y="32" width="23" height="18" fill="red"></rect>
-  <rect x="8" y="51" width="23" height="18" fill="green"></rect>
-  <rect x="8" y="70" width="23" height="18" fill="blue"></rect>
 </svg>
