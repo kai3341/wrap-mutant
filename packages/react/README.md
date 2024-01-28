@@ -52,7 +52,7 @@ It's possible to avoid all loops in this component via pushing into records arra
 - - `deps`: **Optional** dependency `Array`, passed directly [useMemo](https://react.dev/reference/react/useMemo#usememo). **Default**: `[]`
 - - `bind`: **Optional** `boolean` flag should we call utility `bindCallables` defined at [@wrap-mutant/util](../utils). **Default**: `false`
 - - `args`: **Optional** `any` generic parameter passed into factory `function` (first parameter). Allows you to move complicated factory functions outside your `FunctionalComponent` closure to improve your code readability and performance
-- - `count`: **Optional** `number` parameter meaning how many wrapper objects will be pre-created. More info at [@wrap-mutant/core API V2](https://github.com/kai3341/wrap-mutant/tree/main/packages/core#api-v2)
+- - `count`: **Optional** `number` parameter meaning how many wrapper objects will be pre-created. More info at [@wrap-mutant/core API V2](../core#api-v2)
 
 # Any questions?
 
