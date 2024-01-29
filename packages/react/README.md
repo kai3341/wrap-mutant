@@ -8,7 +8,7 @@ Solution is in wrapping that big or complex objects into [Proxy](https://develop
 
 ---
 
-This package contains react integration
+This package contains react integration. To understand how actually it works please read the docs of [@wrap-mutant/core](../core). Don't be afraid, it's small.
 
 # useWMState
 
