@@ -49,10 +49,58 @@ It's possible to avoid all loops in this component via pushing into records arra
 
 - **Required** factory `function`, passed directly [useMemo](https://react.dev/reference/react/useMemo#usememo)
 - **Optional** options: `object`:
-- - `deps`: **Optional** dependency `Array`, passed directly [useMemo](https://react.dev/reference/react/useMemo#usememo). **Default**: `[]`
-- - `bind`: **Optional** `boolean` flag should we call utility `bindCallables` defined at [@wrap-mutant/util](../utils). **Default**: `false`
-- - `args`: **Optional** `any` generic parameter passed into factory `function` (first parameter). Allows you to move complicated factory functions outside your `FunctionalComponent` closure to improve your code readability and performance
-- - `count`: **Optional** `number` parameter meaning how many wrapper objects will be pre-created. More info at [@wrap-mutant/core API V2](../core#api-v2)
+  - `deps`: **Optional** dependency `Array`, passed directly [useMemo](https://react.dev/reference/react/useMemo#usememo). **Default**: `[]`
+  - `bind`: **Optional** `boolean` flag should we call utility `bindCallables` defined at [@wrap-mutant/util](../utils). **Default**: `false`. Read more explaination in [Pitfalls](#pitfalls) section
+  - `args`: **Optional** `any` generic parameter passed into factory `function` (first parameter). Allows you to move complicated factory functions outside your `FunctionalComponent` closure to improve your code readability and performance
+  - `count`: **Optional** `number` parameter meaning how many wrapper objects will be pre-created. More info at [@wrap-mutant/core API V2](../core#api-v2)
+
+# re-exports
+
+## from [@wrap-mutant/core API V2](../core#api-v2):
+
+```typescript
+import { wrap, toggle, HasWrapperGen } from "@wrap-mutant/react";
+```
+
+- **function** `wrap` is renamed export of [@wrap-mutant/core](../core#api-v2)'s `wrapCached`
+- **function** `toggle` is renamed export of [@wrap-mutant/core](../core#api-v2)'s `toggleCached`
+- **type** `HasWrapperGen` is [@wrap-mutant/core](../core#api-v2)'s `HasWrapperGen`
+
+## from [@wrap-mutant/utils](../utils):
+
+```typescript
+import { bindCallables } from "@wrap-mutant/react";
+```
+
+- **function** `bindCallables` is [@wrap-mutant/utils](../utils)'s `bindCallables`
+
+# Pitfalls
+
+Wrapped target object's methods behavior changes by [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) object -- they loose their's `this`. There is an example:
+
+```typescript
+import { wrap } from "@wrap-mutant/react";
+
+const A = wrap([] as number[]);
+A.push(1, 2, 3, 4, 5); // <== throws an Error
+A.forEach(concole.log); // <== throws an Error too
+```
+
+In this example `push` and `forEach` methods lost their's `this`. More commonly used `map` method also loose his `this`. Solution:
+
+```typescript
+import { wrap, bindCallables } from "@wrap-mutant/react";
+
+const A = wrap(bindCallables([] as number[]));
+A.push(1, 2, 3, 4, 5); // <== OK
+A.forEach(concole.log); // <== OK
+```
+
+It means before `wrap`ping you have to apply `bindCallables` to target object. And exactly this is a meaning of `bind` option of [useWMState](#usewmstate) hook.
+
+General rule sounds like:
+
+> If you are calling methods of `wrap`ped object and you are sure these methods implementation is not an arrow function, you have have to `bind callables` before `wrap`ping.
 
 # Any questions?
 

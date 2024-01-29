@@ -2,8 +2,8 @@
   "description": "Allow object mutation and changing its reference without recreating",
   "scripts": {
     "build": "lerna run --scope \"@wrap-mutant/*\" build",
-    "linkall": "D=\"$PWD\"; for d in dist/*; do cd \"$d\"; sudo npm link; cd \"$D\"; done",
-    "packall": "D=\"$PWD\"; mkdir -p pack; for d in dist/*; do cd \"$d\"; npm pack --pack-destination \"$D\"/pack; cd \"$D\"; done"
+    "packall": "D=\"$PWD\"; mkdir -p pack; for d in dist/*; do cd \"$d\"; npm pack --pack-destination \"$D\"/pack; cd \"$D\"; done",
+    "publishall": "D=\"$PWD\"; for d in dist/*; do cd \"$d\"; npm publish; cd \"$D\"; done"
   },
   "author": "AI Kavalevich",
   "license": "MIT",

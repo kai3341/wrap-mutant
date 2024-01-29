@@ -22,29 +22,10 @@ const handlePackageJSON = async () => {
   );
 };
 
-const copyImgDir = async () => {
-  const imgSrcPath = join(srcDir, "img");
-  let stats;
-  try {
-    stats = await stat(imgSrcPath);
-  } catch (e) {
-    if (e.code === "ENOENT") return;
-    throw e;
-  }
-  if (!stats.isDirectory())
-    throw new Error({
-      path: imgSrcPath,
-      description: "Expected directory, found something else",
-    });
-
-  await cp(imgSrcPath, join(descDir, "img"), { recursive: true });
-};
-
 const main = async () => {
   await Promise.all([
     copyFile(join(__dirname, "LICENSE"), join(descDir, "LICENSE")),
     copyFile(join(".", "README.md"), join(descDir, "README.md")),
-    copyImgDir(),
     handlePackageJSON(),
   ]);
 };

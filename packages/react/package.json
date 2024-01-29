@@ -1,6 +1,6 @@
 {
   "name": "@wrap-mutant/react",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Allow object mutation and changing its reference without recreating",
   "main": "./src/index.ts",
   "scripts": {
