@@ -1,5 +1,5 @@
 import { join, sep } from "path";
-import { copyFile, readFile, writeFile, stat, cp } from "fs/promises";
+import { copyFile, readFile, writeFile } from "fs/promises";
 
 const __dirname = new URL(import.meta.url + "/..").pathname;
 
