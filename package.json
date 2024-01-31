@@ -3,7 +3,8 @@
   "scripts": {
     "build": "lerna run --scope \"@wrap-mutant/*\" build",
     "packall": "D=\"$PWD\"; mkdir -p pack; for d in dist/*; do cd \"$d\"; npm pack --pack-destination \"$D\"/pack; cd \"$D\"; done",
-    "publishall": "D=\"$PWD\"; for d in dist/*; do cd \"$d\"; npm publish; cd \"$D\"; done"
+    "prepublishall": "npm run build",
+    "publishall": "node publishAll.mjs"
   },
   "author": "AI Kavalevich",
   "license": "MIT",
@@ -20,6 +21,7 @@
   ],
   "homepage": "https://github.com/kai3341/wrap-mutant",
   "devDependencies": {
+    "compare-versions": "^6.1.0",
     "lerna": "^8.0.2",
     "typescript": "^5.3.3"
   },
