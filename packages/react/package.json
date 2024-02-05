@@ -12,6 +12,7 @@
     "wrap-mutant",
     "Typescript",
     "mutation",
+    "performance",
     "reference",
     "wrap",
     "react"
@@ -29,7 +30,7 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "@wrap-mutant/core": "^0.0.1",
+    "@wrap-mutant/core": "^0.0.2",
     "@wrap-mutant/utils": "^0.0.1",
     "react": ">=16.14"
   },

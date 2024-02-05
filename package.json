@@ -16,6 +16,7 @@
     "wrap-mutant",
     "Typescript",
     "mutation",
+    "performance",
     "reference",
     "wrap"
   ],

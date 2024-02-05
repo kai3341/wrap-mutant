@@ -1,8 +1,14 @@
 import { useMemo, useState } from "react";
-import { wrap, toggle, bindCallables, HasWrapperGen } from "./externals";
+import {
+  wrap as wrap_,
+  toggle,
+  bindCallables,
+  HasWrapperGen,
+} from "./externals";
 
 export type WMStateOptions<A, D> = {
   bind?: boolean;
+  wrap?: boolean;
   deps?: D[];
   args?: A;
   count?: number;
@@ -25,18 +31,29 @@ const WMStateFactory = /*#__PURE__*/ <A, T>(
   factory: FactoryFN<A, T>,
   args: FactoryFNArgs<A>,
   bind: boolean,
+  wrap: boolean,
   count?: number,
 ) => {
-  const value = factory(args);
-  if (bind) bindCallables(value);
-  return wrap(value, count);
+  let value = factory(args);
+  if (bind) value = bindCallables(value);
+  if (wrap) value = wrap_(value, count);
+  return value as HasWrapperGen<T>;
 };
 
 export const useWMState = /*#__PURE__*/ <A, D, T>(
   factory: FactoryFN<A, T>,
-  { deps = [], bind = false, args, count }: WMStateOptions<A, D> = {},
+  {
+    deps = [],
+    bind = false,
+    wrap = true,
+    args,
+    count,
+  }: WMStateOptions<A, D> = {},
 ) => {
-  const value = useMemo(() => WMStateFactory(factory, args, bind, count), deps);
+  const value = useMemo(
+    () => WMStateFactory(factory, args, bind, wrap, count),
+    deps,
+  );
 
   const stateData = useState(value);
   const [state] = stateData;

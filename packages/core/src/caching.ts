@@ -1,4 +1,4 @@
-import { extractTargetSymbol, toggleWrapperSymbol, options } from "./constants";
+import { extractTargetSymbol, toggleWrapperSymbol } from "./constants";
 
 export type WrapperGenMixin<T> = {
   [extractTargetSymbol]: HasWrapperGen<T>;
@@ -16,7 +16,11 @@ const toggleCachedGenerator = /*#__PURE__*/ <T>(cached: T[]) => {
   };
 };
 
-export const wrapCached = /*#__PURE__*/ <T>(target: T, count = 3) => {
+export const wrapCached = /*#__PURE__*/ <T>(
+  target: T,
+  count = 3,
+  options = {},
+) => {
   const cached: HasWrapperGen<T>[] = [];
   const newTarget = target as HasWrapperGen<T>;
   for (let i = 0; i < count; i++) cached.push(new Proxy(newTarget, options));
