@@ -95,7 +95,7 @@ const ItemRender = (props: Item) => {
 };
 
 const Container = () => {
-  // ... All code skept
+  // ... All code skipped. You  can see more at examples
   // prettier-ignore
   const updateItem = useCallback(
     (diff: any) => {/* do update state */},
