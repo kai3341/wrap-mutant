@@ -65,7 +65,54 @@ It's possible to avoid all loops in this component via pushing into records arra
   - `deps`: **Optional** dependency `Array`, passed directly [useMemo](https://react.dev/reference/react/useMemo#usememo). **Default**: `[]`
   - `bind`: **Optional** `boolean` flag should we call utility `bindCallables` defined at [@wrap-mutant/util](../utils). **Default**: `false`. Read more explaination in [Pitfalls](#pitfalls) section
   - `args`: **Optional** `any` generic parameter passed into factory `function` (first parameter). Allows you to move complicated factory functions outside your `FunctionalComponent` closure to improve your code readability and performance
+  - `wrap`: **Optional** `boolean` meaning should we [wrap](../core#api-v2) the target object or not. **Default**: `true`
   - `count`: **Optional** `number` parameter meaning how many wrapper objects will be pre-created. More info at [@wrap-mutant/core API V2](../core#api-v2)
+
+---
+
+# createMutableContext
+
+Now I imagine you say "WAAAT?", but I'll explain :). This is auxiliary tool created for [rendered](#rendered) array-like objects _coming soon_. And if you think it's useless -- start from reading about [rendered](#rendered), and then welcome here.
+
+In very short words MutableContext is the way to keep actual callbacks without element re-rendering. This is the only way to pass new callbacks into [rendered](#rendered) array-like objects without their's re-render.
+
+Usage is absolutelly the same as regular context. Limitations:
+
+- You have to pass `Object`-like value anyway even you have the only callback
+- **NEVER** unpack this context. Read [How do JavaScript closures work?](https://stackoverflow.com/questions/111102/how-do-javascript-closures-work)
+
+```typescript
+import { createMutableContext } from "@wrap-mutant/react";
+
+const ReviewsItemCTX = createMutableContext({ updateItem: (diff: any) => {} });
+
+const ItemRender = (props: Item) => {
+  const ctx = useContext(ReviewsItemCTX); // <= DO NOT UNPACK
+  return (
+    <ReviewsItem item={props} updateItem={(diff) => ctx.updateItem(diff)} />
+    // ALSO WRONG updateItem={ctx.updateItem}
+  );
+};
+
+const Container = () => {
+  // ... All code skept
+  // prettier-ignore
+  const updateItem = useCallback(
+    (diff: any) => {/* do update state */},
+    [/* requirements. Everything as usual */],
+  );
+  return (
+    // Again. Context value have to be Object-like
+    <ReviewsItemCTX.Provider value={{ updateItem }}>
+      {/* children */}
+    </ReviewsItemCTX.Provider>
+  );
+};
+```
+
+All these weird things are created to make possible implementation for [rendered](#rendered) array-like objects
+
+---
 
 # re-exports
 
@@ -86,6 +133,8 @@ import { bindCallables } from "@wrap-mutant/react";
 ```
 
 - **function** `bindCallables` is [@wrap-mutant/utils](../utils)'s `bindCallables`
+
+---
 
 # Pitfalls
 
@@ -113,7 +162,9 @@ It means before `wrap`ping you have to apply `bindCallables` to target object. A
 
 General rule sounds like:
 
-> If you are calling methods of `wrap`ped object and you are sure these methods implementation is not an arrow function, you have have to `bind callables` before `wrap`ping.
+> If you are calling methods of `wrap`ped object and you are sure these methods implementation is not an arrow function, you have to `bind callables` before `wrap`ping.
+
+---
 
 # Any questions?
 
