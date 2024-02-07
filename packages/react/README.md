@@ -76,6 +76,8 @@ Now I imagine you say "WAAAT?", but I'll explain :). This is auxiliary tool crea
 
 In very short words MutableContext is the way to keep actual callbacks without element re-rendering. This is the only way to pass new callbacks into [@wrap-mutant/react-rendered-array](../react-rendered-array) array-like objects without their's re-render.
 
+Be really careful in `MutableContext` usage. Be sure you understand how actually `react` works and why does render triggers.
+
 Usage is absolutelly the same as regular context. Limitations:
 
 - You have to pass `Object`-like value anyway even you have the only callback
@@ -110,7 +112,7 @@ const Container = () => {
 };
 ```
 
-All these weird things are created to make possible implementation for [@wrap-mutant/react-rendered-array](../react-rendered-array) array-like objects
+All these weird things are created to make possible implementation for [@wrap-mutant/react-rendered-array](../react-rendered-array)-like objects
 
 ---
 

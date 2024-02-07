@@ -29,6 +29,13 @@ This package is separated from [@wrap-mutant/react](../react) because of differe
 
 This package allows you avoid re-render of huge array of components and that's how you win the performance. It will be useful when you have to render large number of components without pagination, for example, in endless scroll (hello, LinkedIn, you are really slow) or when you render SVG.
 
+What do you win? When we render containers, we have 2 loops:
+
+- Array rebuilding
+- Array mapping into `JSX.Element`
+
+So, if [@wrap-mutant/react](../react/)'s `useWMState` makes you avoid the first one, this package is aimed to avoid the second. It means this package allows you to render `Array`s always by `O(1)`. This is how you win the performance.
+
 I know API makes you think "not exactly what I want..." and you are right. But as engeneers we have to pay something to win something else. You have to implement small adapter component which prepare props for your target component.
 
 Because of provided by this package `Array`s are already wrapped, it would be good to pass `{ wrap: false }` into `useWMState`'s options.
@@ -117,6 +124,7 @@ This example provides both [@wrap-mutant/react](../react)'s and current package'
 - **Returns** _already wrapped_ into `Proxy` object `Array`. Then you may mutate it as you want. Supported methods:
 
   - Assingment by index, e.g. `myArray[42] = {...something}`
+  - Delete by index, e.g. `delete myArray[42]`
   - `push`, `pop`, `shift`, `unshift`, `reverse`, `splice`, `sort`
 
 # RenderedHeap (TODO)
