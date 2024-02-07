@@ -72,9 +72,9 @@ It's possible to avoid all loops in this component via pushing into records arra
 
 # createMutableContext
 
-Now I imagine you say "WAAAT?", but I'll explain :). This is auxiliary tool created for [rendered](#rendered) array-like objects _coming soon_. And if you think it's useless -- start from reading about [rendered](#rendered), and then welcome here.
+Now I imagine you say "WAAAT?", but I'll explain :). This is auxiliary tool created for [@wrap-mutant/react-rendered-array](../react-rendered-array)-like objects. And if you think it's useless -- start from reading about [@wrap-mutant/react-rendered-array](../react-rendered-array), and then welcome here.
 
-In very short words MutableContext is the way to keep actual callbacks without element re-rendering. This is the only way to pass new callbacks into [rendered](#rendered) array-like objects without their's re-render.
+In very short words MutableContext is the way to keep actual callbacks without element re-rendering. This is the only way to pass new callbacks into [@wrap-mutant/react-rendered-array](../react-rendered-array) array-like objects without their's re-render.
 
 Usage is absolutelly the same as regular context. Limitations:
 
@@ -110,7 +110,7 @@ const Container = () => {
 };
 ```
 
-All these weird things are created to make possible implementation for [rendered](#rendered) array-like objects
+All these weird things are created to make possible implementation for [@wrap-mutant/react-rendered-array](../react-rendered-array) array-like objects
 
 ---
 

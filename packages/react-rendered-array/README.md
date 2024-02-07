@@ -87,6 +87,7 @@ const recordFactory = RenderedArray({
 });
 
 export const MyContainer = () => {
+  // Don't forget to pass `wrap: false`
   const [records, updateRecords] = useWMState(recordFactory, { wrap: false });
 
   // prettier-ignore
@@ -108,6 +109,18 @@ export const MyContainer = () => {
 This example provides both [@wrap-mutant/react](../react)'s and current package's `RenderedArray` APIs. But here we will talk about `RenderedArray`:
 
 - **Required** options: `object`:
+
   - `Component`: **Required** react component to render each `Array`'s element
   - `keyFunction`: **Required** `function` generates `key` from your `Array`'s element
   - `count`: **Optional** `number` parameter meaning how many wrapper objects will be pre-created. More info at [@wrap-mutant/core API V2](../core#api-v2)
+
+- **Returns** _already wrapped_ into `Proxy` object `Array`. Then you may mutate it as you want. Supported methods:
+
+  - Assingment by index, e.g. `myArray[42] = {...something}`
+  - `push`, `pop`, `shift`, `unshift`, `reverse`, `splice`, `sort`
+
+# RenderedHeap (TODO)
+
+_Requires to publish my fork of heap implementation_
+
+More info about [heap data structure](<https://en.wikipedia.org/wiki/Heap_(data_structure)>). Actually it means always sorted `Array`. Very useful in graphics, but can be used everywhere you need always sorted data
