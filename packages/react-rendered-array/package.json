@@ -1,0 +1,41 @@
+{
+  "name": "@wrap-mutant/react-rendered-array",
+  "version": "0.0.1",
+  "description": "Allows to avoid heavy array re-render on each data update",
+  "main": "./src/index.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.pkg.json",
+    "postbuild": "node ../../packagePostBuild.mjs",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "wrap-mutant",
+    "Typescript",
+    "mutation",
+    "performance",
+    "reference",
+    "wrap",
+    "react"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kai3341/wrap-mutant.git",
+    "directory": "packages/react-rendered-array"
+  },
+  "author": "AI Kavalevich",
+  "license": "MIT",
+  "homepage": "https://github.com/kai3341/wrap-mutant",
+  "devDependencies": {
+    "@types/react": ">=16.14",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "@wrap-mutant/react": "^0.0.2"
+  },
+  "exports": {
+    "default": "./src/index.ts",
+    "require": "./src/index.ts",
+    "import": "./src/index.ts",
+    "types": "./src/index.ts"
+  }
+}
