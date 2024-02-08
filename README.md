@@ -24,3 +24,6 @@ reactflow example [[demo](https://kai3341.github.io/d73bce02-46a1-4e59-895a-4863
 
 [![React integration](https://img.shields.io/badge/%40wrap--mutant%2Freact-blue.svg?style=social&logo=github)](./packages/react/)
 [![NPM Version](https://img.shields.io/npm/v/%40wrap-mutant%2Freact?style=social&logo=npm)](https://www.npmjs.com/package/@wrap-mutant/react)
+
+[![React. Rendered Array](https://img.shields.io/badge/%40wrap--mutant%2Freact--rendered--array-blue.svg?style=social&logo=github)](./packages/react-renddered-array/)
+[![NPM Version](https://img.shields.io/npm/v/%40wrap-mutant%2Freact-rendered-array?style=social&logo=npm)](https://www.npmjs.com/package/@wrap-mutant/react-renddered-array)

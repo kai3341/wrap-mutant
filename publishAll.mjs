@@ -16,9 +16,13 @@ const publish = async (path) => {
   const options = {
     cwd: path,
     env: process.env,
-    stdio: "inherit",
+    stdio: [process.stdin, process.stdout, process.stderr],
   };
-  const publishProcess = spawn("npm", ["publish", "--dry-run"], options);
+  const publishProcess = spawn(
+    "npm",
+    ["publish", "--access", "public"],
+    options,
+  );
   await new Promise((resolve, reject) => publishProcess.on("exit", resolve));
 };
 
