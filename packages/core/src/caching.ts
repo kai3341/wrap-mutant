@@ -1,33 +1,48 @@
-import { extractTargetSymbol, toggleWrapperSymbol } from "./constants";
+import { originalTargetSymbol, wrappedMetaSymbol } from "./constants";
 
 export type WrapperGenMixin<T> = {
-  [extractTargetSymbol]: HasWrapperGen<T>;
-  [toggleWrapperSymbol]: () => HasWrapperGen<T>;
+  [originalTargetSymbol]: HasWrapperGen<T>;
+  [wrappedMetaSymbol]: () => HasWrapperGen<T>;
 };
 
 export type HasWrapperGen<T> = T & WrapperGenMixin<T>;
 
-// Initially it was generator, but ES5 generator polyfill is too large
-const toggleCachedGenerator = /*#__PURE__*/ <T>(cached: T[]) => {
+type LLNode<T> = {
+  value: T;
+  next: LLNode<T>;
+};
+
+type LLHead<T> = {
+  head: LLNode<T>;
+};
+
+const toggleCachedGenerator = /*#__PURE__*/ <T extends {}>(head: LLHead<T>) => {
   return () => {
-    const next = cached.shift() as T;
-    cached.push(next);
-    return next;
+    const { next, value } = head.head;
+    head.head = next;
+    return value;
   };
 };
 
-export const wrapCached = /*#__PURE__*/ <T>(
+export const wrapCached = /*#__PURE__*/ <T extends {}>(
   target: T,
   count = 3,
   options = {},
 ) => {
-  const cached: HasWrapperGen<T>[] = [];
   const newTarget = target as HasWrapperGen<T>;
-  for (let i = 0; i < count; i++) cached.push(new Proxy(newTarget, options));
-  newTarget[toggleWrapperSymbol] = toggleCachedGenerator(cached);
-  newTarget[extractTargetSymbol] = newTarget;
-  return cached[count - 1];
+  let value = new Proxy(newTarget, options);
+  const last = { value } as LLNode<HasWrapperGen<T>>;
+  let next = last;
+  for (let i = 1; i < count; i++) {
+    value = new Proxy(newTarget, options);
+    next = { value, next } as LLNode<HasWrapperGen<T>>;
+  }
+  last.next = next;
+  const head = { head: next } as LLHead<HasWrapperGen<T>>;
+  newTarget[wrappedMetaSymbol] = toggleCachedGenerator(head);
+  return last.value;
 };
 
-export const toggleCached = /*#__PURE__*/ <T>(target: HasWrapperGen<T>) =>
-  target[toggleWrapperSymbol]();
+export const toggleCached = /*#__PURE__*/ <T extends {}>(
+  target: HasWrapperGen<T>,
+) => target[wrappedMetaSymbol]();

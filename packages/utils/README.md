@@ -19,20 +19,26 @@ reactflow example [[demo](https://kai3341.github.io/d73bce02-46a1-4e59-895a-4863
 - [/src/pages/projects/projects.tsx](https://github.com/kai3341/d73bce02-46a1-4e59-895a-4863c2fc48f0/blob/master/src/pages/projects/projects.tsx)
 - [/src/lib/statemgr.ts](https://github.com/kai3341/d73bce02-46a1-4e59-895a-4863c2fc48f0/blob/master/src/lib/statemgr.ts)
 
+[pravosleva](https://github.com/pravosleva)'s substring-highlight-sample [[demo](https://kai3341.github.io/substring-highlight-sample/) | [repo](https://github.com/kai3341/substring-highlight-sample)]
+
+- [/src/pages/uremont/reviews/kai3341-sample/Sample.tsx](https://github.com/kai3341/substring-highlight-sample/blob/master/src/pages/uremont/reviews/kai3341-sample/Sample.tsx)
+
 ---
 
 This package contains utility toolbox created to simplify your life and this library usage and solve some regular problems
 
 # bindCallables
 
-Unfortunally there is a negative effect of wrapping objects into [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) object -- the wrapped object's methods loose their's `this`. So, if you have wrapped the object and got an error like `this is undefined` -- just bind the callables.
-
 ```javascript
 import { bindCallables } from "@wrap-mutant/utils";
 ```
 
-Avoid to bind callables of your target more then once
+Unfortunally there is a negative effect of wrapping objects into [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) object -- the wrapped object's methods loose their's `this`. So, if you have wrapped the object and got an error like `this is undefined` -- just bind the callables. Avoid to bind callables of your target more then once
+
+**API reference**:
+
+- **Required** target: `any extends Object`. It may be an `Array` or its subclass, any kind of `Object`, any `function`, any `class` constructor or instance
 
 # Any questions?
 
-Don't be afraid to open this library source code -- it's really small
+Don't be afraid to open [this library source code](https://github.com/kai3341/wrap-mutant/tree/main/packages/utils) -- it's really small. Also we have [Telegram Community](https://t.me/wrap_mutant/2)

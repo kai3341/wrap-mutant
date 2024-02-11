@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": "./",
     "target": "ES5",
     "module": "ES2015",
     "lib": ["DOM", "DOM.Iterable", "ES2017"],
@@ -13,8 +14,11 @@
     "noFallthroughCasesInSwitch": true,
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "isolatedModules": true
+    "isolatedModules": true,
     // "noEmit": true,
+    "paths": {
+      "@wrap-mutant/core/*": ["dist/core/*"]
+    }
   },
   "exclude": [
     //

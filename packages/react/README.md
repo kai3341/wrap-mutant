@@ -19,9 +19,15 @@ reactflow example [[demo](https://kai3341.github.io/d73bce02-46a1-4e59-895a-4863
 - [/src/pages/projects/projects.tsx](https://github.com/kai3341/d73bce02-46a1-4e59-895a-4863c2fc48f0/blob/master/src/pages/projects/projects.tsx)
 - [/src/lib/statemgr.ts](https://github.com/kai3341/d73bce02-46a1-4e59-895a-4863c2fc48f0/blob/master/src/lib/statemgr.ts)
 
+[pravosleva](https://github.com/pravosleva)'s substring-highlight-sample [[demo](https://kai3341.github.io/substring-highlight-sample/) | [repo](https://github.com/kai3341/substring-highlight-sample)]
+
+- [/src/pages/uremont/reviews/kai3341-sample/Sample.tsx](https://github.com/kai3341/substring-highlight-sample/blob/master/src/pages/uremont/reviews/kai3341-sample/Sample.tsx)
+
 ---
 
-This package contains react integration. To understand how actually it works please read the docs of [@wrap-mutant/core](../core). Don't be afraid, it's small.
+This package contains react integration. To understand how actually it works please read the docs of [@wrap-mutant/core API V2](../core). Don't be afraid, it's small.
+
+![API V2 explaination](../../img/core-caching.svg "toggleCached")
 
 # useWMState
 
@@ -56,7 +62,7 @@ export const Blackboard = () => {
 };
 ```
 
-It's possible to avoid all loops in this component via pushing into records array rendered `JSX.Element` instead of string. But keep in mind it's dirty hack.
+It's possible to avoid all loops in this component via pushing into records array rendered `JSX.Element` instead of string. But keep in mind it's dirty hack. Of course, we will talk about it next at [createMutableContext](createMutableContext) and [@wrap-mutant/react-rendered-array](../react-rendered-array) :)
 
 ## API reference:
 
@@ -170,4 +176,4 @@ General rule sounds like:
 
 # Any questions?
 
-Don't be afraid to open this library source code -- it's really small
+Don't be afraid to open [this library source code](https://github.com/kai3341/wrap-mutant/tree/main/packages/react) -- it's really small. Also we have [Telegram Community](https://t.me/wrap_mutant/4)

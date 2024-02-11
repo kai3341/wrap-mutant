@@ -1,7 +1,7 @@
 import { wrap as _wrap, toggle, bindCallables } from "@wrap-mutant/react";
 
 import {
-  changedFlsgSymbol,
+  changedFlagSymbol,
   renderedArraySymbol,
   componentSymbol,
   keyFNSymbol,
@@ -13,7 +13,7 @@ import type { HasWrapperGen } from "@wrap-mutant/react";
 export type KeyFN<T> = (item: T) => string | number;
 
 export type RenderedMixin<T> = {
-  [changedFlsgSymbol]: boolean;
+  [changedFlagSymbol]: boolean;
   [renderedArraySymbol]: HasWrapperGen<Array<JSX.Element>>;
   [componentSymbol]: FC<T>;
   [keyFNSymbol]: KeyFN<T>;
@@ -37,7 +37,7 @@ export const RenderedArrayHandler = {
       const keyFN = target[keyFNSymbol];
       // @ts-expect-error: 2540
       inner[property] = <Component {...value} key={keyFN(value)} />;
-      target[changedFlsgSymbol] = true;
+      target[changedFlagSymbol] = true;
     }
     // @ts-expect-error: 2540
     target[property] = value;
@@ -51,7 +51,7 @@ export const RenderedArrayHandler = {
       const inner = target[renderedArraySymbol];
       // @ts-expect-error: 2540
       delete inner[property];
-      target[changedFlsgSymbol] = true;
+      target[changedFlagSymbol] = true;
     }
     delete target[property];
     return true;
@@ -81,7 +81,7 @@ const methodCreators = {
 
         return this.length;
       } finally {
-        this[changedFlsgSymbol] = true;
+        this[changedFlagSymbol] = true;
       }
     };
   },
@@ -100,7 +100,7 @@ const methodCreators = {
         // @ts-expect-error: 2349
         return Super.apply(this, args);
       } finally {
-        this[changedFlsgSymbol] = true;
+        this[changedFlagSymbol] = true;
       }
     };
   },
@@ -122,7 +122,7 @@ const methodCreators = {
         // @ts-expect-error: 2349
         return Super.call(this, callback);
       } finally {
-        this[changedFlsgSymbol] = true;
+        this[changedFlagSymbol] = true;
       }
     };
   },
@@ -143,10 +143,10 @@ const methodCreators = {
 function render<T>(this: RenderedArrayType<T>) {
   let rendered = this[renderedArraySymbol];
 
-  if (this[changedFlsgSymbol]) {
+  if (this[changedFlagSymbol]) {
     rendered = toggle(rendered);
     this[renderedArraySymbol] = rendered;
-    this[changedFlsgSymbol] = false;
+    this[changedFlagSymbol] = false;
   }
 
   return rendered;
@@ -198,7 +198,7 @@ export function RenderedArrayGeneric<T extends {}>(
 ) {
   const CustomType = customArrayClasses.get(Base) as ArrayConstructor;
   let renderedArray = new CustomType<T>() as RenderedArrayType<T>;
-  renderedArray[changedFlsgSymbol] = false;
+  renderedArray[changedFlagSymbol] = false;
   renderedArray[renderedArraySymbol] = _wrap(
     bindCallables(new Base() as JSX.Element[]),
   );

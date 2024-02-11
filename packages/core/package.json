@@ -1,6 +1,6 @@
 {
   "name": "@wrap-mutant/core",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Allow object mutation and changing its reference without recreating",
   "main": "./src/index.ts",
   "scripts": {
@@ -25,6 +25,7 @@
   "license": "MIT",
   "homepage": "https://github.com/kai3341/wrap-mutant",
   "devDependencies": {
+    "@types/node": "^20.11.17",
     "typescript": "^5.3.3"
   },
   "exports": {

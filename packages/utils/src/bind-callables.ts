@@ -1,4 +1,4 @@
-export const bindCallables = /*#__PURE__*/ <T>(target: T) => {
+export const bindCallables = /*#__PURE__*/ <T extends {}>(target: T) => {
   const newTarget = target as any;
   const descriptors = Object.getOwnPropertyDescriptors(
     newTarget.constructor.prototype,

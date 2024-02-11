@@ -1,6 +1,6 @@
 {
   "name": "@wrap-mutant/react",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Allow object mutation and changing its reference without recreating",
   "main": "./src/index.ts",
   "scripts": {
@@ -26,13 +26,13 @@
   "license": "MIT",
   "homepage": "https://github.com/kai3341/wrap-mutant",
   "devDependencies": {
-    "@types/react": ">=16.14",
+    "@types/react": ">=16.14 || >=17",
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "@wrap-mutant/core": "^0.0.2",
-    "@wrap-mutant/utils": "^0.0.1",
-    "react": ">=16.14"
+    "@wrap-mutant/core": ">=0.0.2",
+    "@wrap-mutant/utils": ">=0.0.1",
+    "react": ">=16.14 || >=17"
   },
   "exports": {
     "default": "./src/index.ts",

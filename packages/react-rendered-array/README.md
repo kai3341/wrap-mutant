@@ -12,18 +12,19 @@ Object mutation is easy and extremelly fast. But such libraries like react make 
 
 Solution is in wrapping that big or complex objects into [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) object.
 
-## Examples (FIXME)
+## Examples
 
-reactflow example [[demo](https://kai3341.github.io/d73bce02-46a1-4e59-895a-4863c2fc48f0/) | [repo](https://github.com/kai3341/d73bce02-46a1-4e59-895a-4863c2fc48f0)]
+[pravosleva](https://github.com/pravosleva)'s substring-highlight-sample [[demo](https://kai3341.github.io/substring-highlight-sample/) | [repo](https://github.com/kai3341/substring-highlight-sample)]
 
-- [/src/pages/projects/projects.tsx](https://github.com/kai3341/d73bce02-46a1-4e59-895a-4863c2fc48f0/blob/master/src/pages/projects/projects.tsx)
-- [/src/lib/statemgr.ts](https://github.com/kai3341/d73bce02-46a1-4e59-895a-4863c2fc48f0/blob/master/src/lib/statemgr.ts)
+- [/src/pages/uremont/reviews/kai3341-sample/Sample.tsx](https://github.com/kai3341/substring-highlight-sample/blob/master/src/pages/uremont/reviews/kai3341-sample/Sample.tsx)
 
 ---
 
 This package is addition of [@wrap-mutant/react](../react) integration. To understand how actually it works please read the docs of [@wrap-mutant/core](../core) and [@wrap-mutant/react](../react).
 
 This package is separated from [@wrap-mutant/react](../react) because of different release cycles and build targets.
+
+![API V2 explaination](../../img/core-caching.svg "toggleCached")
 
 # About
 
@@ -132,3 +133,7 @@ This example provides both [@wrap-mutant/react](../react)'s and current package'
 _Requires to publish my fork of heap implementation_
 
 More info about [heap data structure](<https://en.wikipedia.org/wiki/Heap_(data_structure)>). Actually it means always sorted `Array`. Very useful in graphics, but can be used everywhere you need always sorted data
+
+# Any questions?
+
+Don't be afraid to open [this library source code](https://github.com/kai3341/wrap-mutant/tree/main/packages/react) -- it's really small. Also we have [Telegram Community](https://t.me/wrap_mutant/4)
