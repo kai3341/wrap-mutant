@@ -1,18 +1,21 @@
 import { originalTargetSymbol, wrappedMetaSymbol } from "./constants";
 
-export type TargetMixin<T> = {
+export type TargetMixin<T extends {}> = {
   [originalTargetSymbol]: HasTarget<T>;
-  [wrappedMetaSymbol]: {};
+  [wrappedMetaSymbol]: ProxyHandler<T>;
 };
 
-export type HasTarget<T> = T & TargetMixin<T>;
+export type HasTarget<T extends {}> = T & TargetMixin<T>;
 
-export const wrap = /*#__PURE__*/ <T>(target: T, options = {}) => {
+export const wrap = <T extends {}>(
+  target: T,
+  options: ProxyHandler<T> = {},
+) => {
   const newTarget = target as HasTarget<T>;
   newTarget[originalTargetSymbol] = newTarget;
   newTarget[wrappedMetaSymbol] = options;
   return new Proxy(newTarget, options);
 };
 
-export const rewrap = /*#__PURE__*/ <T>(target: HasTarget<T>) =>
+export const rewrap = <T extends {}>(target: HasTarget<T>) =>
   new Proxy(target[originalTargetSymbol], target[wrappedMetaSymbol]);

@@ -7,27 +7,31 @@ import {
   keyFNSymbol,
 } from "./constants";
 
-import type { FC } from "react";
+import type { FC, JSX } from "react";
 import type { HasWrapperGen } from "@wrap-mutant/react";
+
+export type ArraySubclass<T, C extends typeof Array<T>> = new () => C;
+export type AnyArraySubclass = ArraySubclass<any, any>;
 
 export type KeyFN<T> = (item: T) => string | number;
 
-export type RenderedMixin<T> = {
+export type RMixin<T extends {}> = {
   [changedFlagSymbol]: boolean;
-  [renderedArraySymbol]: HasWrapperGen<Array<JSX.Element>>;
+  [renderedArraySymbol]: HasWrapperGen<Array<JSX.Element | undefined>>;
   [componentSymbol]: FC<T>;
   [keyFNSymbol]: KeyFN<T>;
   render: () => HasWrapperGen<Array<JSX.Element | undefined>>;
 };
 
-export type RenderedArrayType<T> = RenderedMixin<T> & Array<T>;
+export type RAType<T extends {}, C extends typeof Array<T>> = RMixin<T> & C;
+export type RA<T extends {}, C extends Array<T>> = RMixin<T> & C;
 
 const numeric = /\d+/;
 
 export const RenderedArrayHandler = {
-  set<T extends {}>(
-    target: RenderedArrayType<T>,
-    property: keyof RenderedArrayType<T>,
+  set<T extends {}, C extends Array<T>, A extends RA<T, C>>(
+    target: A,
+    property: keyof A,
     value: T,
     receiver: any,
   ) {
@@ -35,22 +39,22 @@ export const RenderedArrayHandler = {
       const Component = target[componentSymbol];
       const inner = target[renderedArraySymbol];
       const keyFN = target[keyFNSymbol];
-      // @ts-expect-error: 2540
-      inner[property] = <Component {...value} key={keyFN(value)} />;
+      inner[property as any as number] = (
+        <Component {...value} key={keyFN(value)} />
+      );
       target[changedFlagSymbol] = true;
     }
-    // @ts-expect-error: 2540
-    target[property] = value;
+
+    target[property as any as number] = value;
     return true;
   },
-  deleteProperty<T extends {}>(
-    target: RenderedArrayType<T>,
-    property: keyof RenderedArrayType<T>,
+  deleteProperty<T extends {}, C extends Array<T>, A extends RA<T, C>>(
+    target: A,
+    property: keyof A,
   ) {
     if (typeof property === "string" && property.match(numeric)) {
       const inner = target[renderedArraySymbol];
-      // @ts-expect-error: 2540
-      delete inner[property];
+      delete inner[property as any as number];
       target[changedFlagSymbol] = true;
     }
     delete target[property];
@@ -59,59 +63,64 @@ export const RenderedArrayHandler = {
 };
 
 const methodCreators = {
-  pushLike<T>(
-    Base: ArrayConstructor,
-    property: Exclude<keyof Array<T>, number>,
+  pushLike<T extends {}, C extends typeof Array<T>>(
+    Base: new () => C,
+    property: Exclude<keyof Array<T>, number | symbol>,
   ) {
-    const Super = Base.prototype[property];
-    return function <T>(this: RenderedArrayType<T>, ...items: T[]) {
+    const SuperFN = Base.prototype[property] as Function;
+    const Super = SuperFN.apply;
+
+    return function (this: RAType<T, C>, ...items: T[]) {
       const Component = this[componentSymbol];
       const inner = this[renderedArraySymbol];
       const keyFN = this[keyFNSymbol];
 
-      try {
-        for (const props of items) {
-          // @ts-expect-error: 2349
-          Super.call(inner, <Component {...props} key={keyFN(props)} />);
-          // inner[property](<Component {...props} key={keyFN(props)} />);
-          // @ts-expect-error: 2349
-          Super.call(this, props);
-          // this[property](props);
-        }
+      const components = items.map((props) => (
+        <Component {...props} key={keyFN(props)} />
+      ));
 
-        return this.length;
+      try {
+        // @ts-expect-error: 2684
+        Super(inner, components);
+        // @ts-expect-error: 2684
+        return Super(this, items);
       } finally {
         this[changedFlagSymbol] = true;
       }
     };
   },
 
-  spliceLike<T>(
-    Base: ArrayConstructor,
-    property: Exclude<keyof Array<T>, number>,
+  spliceLike<T extends {}, C extends typeof Array<T>>(
+    Base: new () => C,
+    property: Exclude<keyof Array<T>, number | symbol>,
   ) {
-    const Super = Base.prototype[property];
-    return function <T>(this: RenderedArrayType<T>, ...args: any[]) {
+    const SuperFN = Base.prototype[property] as Function;
+    const Super = SuperFN.apply;
+
+    return function (this: RAType<T, C>, ...args: any[]) {
       const inner = this[renderedArraySymbol];
 
       try {
-        // @ts-expect-error: 2349
-        Super.apply(inner, args);
-        // @ts-expect-error: 2349
-        return Super.apply(this, args);
+        // @ts-expect-error: 2684
+        Super(inner, args);
+        // @ts-expect-error: 2684
+        return Super(this, args);
       } finally {
         this[changedFlagSymbol] = true;
       }
     };
   },
 
-  sortLike<T>(
-    Base: ArrayConstructor,
-    property: Exclude<keyof Array<T>, number>,
+  /*
+  findLike<T extends {}, C extends typeof Array<T>>(
+    Base: new () => C,
+    property: Exclude<keyof Array<T>, number | symbol>,
   ) {
-    const Super = Base.prototype[property];
+    const SuperFN = Base.prototype[property] as Function;
+    const Super = SuperFN.apply;
+
     return function <T>(
-      this: RenderedArrayType<T>,
+      this: RAType<T>,
       callback: (item: T) => any,
     ) {
       const inner = this[renderedArraySymbol];
@@ -126,21 +135,22 @@ const methodCreators = {
       }
     };
   },
+  */
 
-  deprecated<T, A, R>(
-    Base: ArrayConstructor,
+  deprecated<T extends {}, C extends typeof Array<T>, A, R>(
+    Base: new () => C,
     property: Exclude<keyof Array<T>, number | symbol>,
   ) {
     const Super = Base.prototype[property] as (...args: A[]) => R;
     const deprecationMSG = `Method "${property}" is deprecated. Aviod ist usage`;
-    return function <T>(this: RenderedArrayType<T>, ...args: A[]) {
+    return function (this: RAType<T, C>, ...args: A[]) {
       console.warn(deprecationMSG);
       return Super.apply(this, args) as R;
     };
   },
 };
 
-function render<T>(this: RenderedArrayType<T>) {
+function render<T extends {}, C extends typeof Array<T>>(this: RAType<T, C>) {
   let rendered = this[renderedArraySymbol];
 
   if (this[changedFlagSymbol]) {
@@ -152,15 +162,11 @@ function render<T>(this: RenderedArrayType<T>) {
   return rendered;
 }
 
-const customArrayClasses = new Map<ArrayConstructor, any>();
+const customArrayClasses = new Map<AnyArraySubclass, AnyArraySubclass>();
 
-interface RegisterCustomArrayOptions {
-  [key: string]: string[];
-}
-
-export function registerCustomArray(
-  Base: ArrayConstructor,
-  options: RegisterCustomArrayOptions,
+export function registerCustomArray<T, C extends typeof Array<T>>(
+  Base: ArraySubclass<T, C>,
+  options: Record<string, string[]>,
 ) {
   const NewBase = class extends Base {};
 
@@ -170,19 +176,12 @@ export function registerCustomArray(
     for (const value of values) {
       const key = name as keyof typeof methodCreators;
       const creator = methodCreators[key];
-      // @ts-expect-error: 7053
+      // @ts-expect-error: 2349,7053
       toAssign[value] = creator(Base, value);
     }
   }
 
   Object.assign(NewBase.prototype, toAssign);
-
-  // const factory = () => {
-  //   const A = new Base();
-  //   Object.assign(A, toAssign);
-  //   return A;
-  // };
-
   customArrayClasses.set(Base, NewBase);
 }
 
@@ -192,22 +191,23 @@ export type RenderedArrayOptions<T> = {
   count?: number;
 };
 
-export function RenderedArrayGeneric<T extends {}>(
-  Base: ArrayConstructor,
+export function RenderedArrayGeneric<T extends {}, C extends Array<T>>(
+  Base: new () => C,
   { Component, keyFunction, count }: RenderedArrayOptions<T>,
 ) {
-  const CustomType = customArrayClasses.get(Base) as ArrayConstructor;
-  let renderedArray = new CustomType<T>() as RenderedArrayType<T>;
+  const CustomType = customArrayClasses.get(Base) as RAType<T, typeof Array>;
+  let renderedArray = new CustomType() as RA<T, C>;
   renderedArray[changedFlagSymbol] = false;
-  renderedArray[renderedArraySymbol] = _wrap(
-    bindCallables(new Base() as JSX.Element[]),
-  );
+  // @ts-expect-error: 2352
+  const rendered = bindCallables(new Base() as JSX.Element[]);
+  renderedArray[renderedArraySymbol] = _wrap(rendered, count);
   renderedArray[componentSymbol] = Component;
   renderedArray[keyFNSymbol] = keyFunction;
+  renderedArray = bindCallables(renderedArray);
   renderedArray = _wrap(
-    bindCallables(renderedArray),
+    renderedArray,
     count,
-    RenderedArrayHandler,
+    RenderedArrayHandler as ProxyHandler<RA<T, C>>,
   );
   return renderedArray;
 }

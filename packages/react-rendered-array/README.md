@@ -89,10 +89,11 @@ const MyAdapter = (props: MyModel) => {
   );
 };
 
-const recordFactory = RenderedArray({
-  Component: MyAdapter,
-  keyFunction: (item: MyModel) => item.key,
-});
+const recordFactory = () =>
+  RenderedArray({
+    Component: MyAdapter,
+    keyFunction: (item: MyModel) => item.key,
+  });
 
 export const MyContainer = () => {
   // Don't forget to pass `wrap: false`

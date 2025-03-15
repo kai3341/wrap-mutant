@@ -19,7 +19,7 @@ export type WMStateOptions<A, D> = {
   count?: number;
 };
 
-type UseStateReturning<T> = [
+type UseStateReturning<T extends {}> = [
   HasWrapperGen<T>,
   (value: HasWrapperGen<T>) => void,
 ];
@@ -27,16 +27,15 @@ type UseStateReturning<T> = [
 type FactoryFNArgs<A> = A | undefined;
 type FactoryFN<A, T> = (args: FactoryFNArgs<A>) => T;
 
-// Asking webpack to remove it
-let raised: /*#__PURE__*/ Set<any>;
-let handler: /*#__PURE__*/ {
-  get: <T>(target: T, prop: string | symbol) => any;
+let raised: Set<any>;
+let handler: {
+  get: <T extends {}>(target: T, prop: string | symbol) => any;
 };
 
 if (process.env.NODE_ENV !== "production") {
   raised = new Set();
   handler = {
-    get: <T>(target: T, prop: string | symbol) => {
+    get: <T extends {}>(target: T, prop: string | symbol) => {
       // @ts-expect-error: 7053
       const val = target[prop];
       if (
@@ -62,12 +61,12 @@ if (process.env.NODE_ENV !== "production") {
   };
 }
 
-/*#__PURE__*/ function updateWMState<T extends {}>(this: UseStateReturning<T>) {
+function updateWMState<T extends {}>(this: UseStateReturning<T>) {
   const [state, setState] = this;
   setState(toggle(state));
 }
 
-const WMStateFactory = /*#__PURE__*/ <A, T extends {}>(
+const WMStateFactory = <A, T extends {}>(
   factory: FactoryFN<A, T>,
   args: FactoryFNArgs<A>,
   bind: boolean,
@@ -121,7 +120,7 @@ const WMStateFactory = /*#__PURE__*/ <A, T extends {}>(
   return value as HasWrapperGen<T>;
 };
 
-export const useWMState = /*#__PURE__*/ <A, D, T extends {}>(
+export const useWMState = <A, D, T extends {}>(
   factory: FactoryFN<A, T>,
   {
     deps = [],
