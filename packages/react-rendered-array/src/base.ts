@@ -1,4 +1,7 @@
+import { createElement } from "react";
+
 import { wrap as _wrap, toggle, bindCallables } from "@wrap-mutant/react";
+import { unwrap } from "@wrap-mutant/core";
 
 import {
   changedFlagSymbol,
@@ -33,15 +36,16 @@ export const RenderedArrayHandler = {
     target: A,
     property: keyof A,
     value: T,
-    receiver: any,
+    _receiver: any,
   ) {
     if (typeof property === "string" && property.match(numeric)) {
       const Component = target[componentSymbol];
       const inner = target[renderedArraySymbol];
       const keyFN = target[keyFNSymbol];
-      inner[property as any as number] = (
-        <Component {...value} key={keyFN(value)} />
-      );
+      inner[property as any as number] = createElement(Component, {
+        ...value,
+        key: keyFN(value),
+      });
       target[changedFlagSymbol] = true;
     }
 
@@ -68,22 +72,19 @@ const methodCreators = {
     property: Exclude<keyof Array<T>, number | symbol>,
   ) {
     const SuperFN = Base.prototype[property] as Function;
-    const Super = SuperFN.apply;
 
     return function (this: RAType<T, C>, ...items: T[]) {
       const Component = this[componentSymbol];
-      const inner = this[renderedArraySymbol];
+      const inner = unwrap(this[renderedArraySymbol]);
       const keyFN = this[keyFNSymbol];
 
-      const components = items.map((props) => (
-        <Component {...props} key={keyFN(props)} />
-      ));
+      const components = items.map((props) =>
+        createElement(Component, { ...props, key: keyFN(props) }),
+      );
 
       try {
-        // @ts-expect-error: 2684
-        Super(inner, components);
-        // @ts-expect-error: 2684
-        return Super(this, items);
+        SuperFN.apply(inner, components);
+        return SuperFN.apply(this, items);
       } finally {
         this[changedFlagSymbol] = true;
       }
@@ -95,16 +96,13 @@ const methodCreators = {
     property: Exclude<keyof Array<T>, number | symbol>,
   ) {
     const SuperFN = Base.prototype[property] as Function;
-    const Super = SuperFN.apply;
 
     return function (this: RAType<T, C>, ...args: any[]) {
-      const inner = this[renderedArraySymbol];
+      const inner = unwrap(this[renderedArraySymbol]);
 
       try {
-        // @ts-expect-error: 2684
-        Super(inner, args);
-        // @ts-expect-error: 2684
-        return Super(this, args);
+        SuperFN.apply(inner, args);
+        return SuperFN.apply(this, args);
       } finally {
         this[changedFlagSymbol] = true;
       }
@@ -141,11 +139,11 @@ const methodCreators = {
     Base: new () => C,
     property: Exclude<keyof Array<T>, number | symbol>,
   ) {
-    const Super = Base.prototype[property] as (...args: A[]) => R;
+    const SuperFN = Base.prototype[property] as (...args: A[]) => R;
     const deprecationMSG = `Method "${property}" is deprecated. Aviod ist usage`;
     return function (this: RAType<T, C>, ...args: A[]) {
       console.warn(deprecationMSG);
-      return Super.apply(this, args) as R;
+      return SuperFN.apply(this, args) as R;
     };
   },
 };

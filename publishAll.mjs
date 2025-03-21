@@ -18,11 +18,8 @@ const publish = async (path) => {
     env: process.env,
     stdio: [process.stdin, process.stdout, process.stderr],
   };
-  const publishProcess = spawn(
-    "npm",
-    ["publish", "--access", "public"],
-    options,
-  );
+  const args = ["publish", "--access", "public"];
+  const publishProcess = spawn("npm", args, options);
   await new Promise((resolve, reject) => publishProcess.on("exit", resolve));
 };
 
@@ -77,7 +74,7 @@ const handlePackageName = async (name) => {
   }
 };
 
-const main = async () => {
+(async () => {
   const dirHandlerPromices = [];
   for (const name of await readdir(distDir)) {
     const promice = handlePackageName(name);
@@ -87,6 +84,4 @@ const main = async () => {
   const results = Promise.all(dirHandlerPromices);
   const toPublishPaths = (await results).filter(Boolean);
   for (const toPublish of toPublishPaths) await publish(toPublish);
-};
-
-main();
+})();
