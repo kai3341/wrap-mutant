@@ -1,6 +1,6 @@
 {
   "name": "@wrap-mutant/react-rendered-array",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Allows to avoid heavy array re-render on each data update",
   "main": "./src/index.ts",
   "scripts": {
