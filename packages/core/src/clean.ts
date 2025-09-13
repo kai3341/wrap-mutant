@@ -1,13 +1,13 @@
 import { originalTargetSymbol, wrappedMetaSymbol } from "./constants";
 
-export type HasBothMixin<T> = {
+export type HasBothMixin<T extends {}> = {
   [originalTargetSymbol]?: HasBoth<T>;
   [wrappedMetaSymbol]?: any;
 };
 
-export type HasBoth<T> = T & HasBothMixin<T>;
+export type HasBoth<T extends {}> = T & HasBothMixin<T>;
 
-export const clean = /*#__PURE__*/ <T>(target: HasBoth<T>) => {
+export const clean = <T extends {}>(target: HasBoth<T>) => {
   delete target[wrappedMetaSymbol];
   delete target[originalTargetSymbol];
   return target as T;

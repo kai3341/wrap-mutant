@@ -22,12 +22,16 @@ reactflow example [[demo](https://kai3341.github.io/d73bce02-46a1-4e59-895a-4863
 
 [![Just core. Tiny and easy](https://img.shields.io/badge/%40wrap--mutant%2Fcore-blue.svg?style=social&logo=github)](./packages/core/)
 [![NPM Version](https://img.shields.io/npm/v/%40wrap-mutant%2Fcore?style=social&logo=npm)](https://www.npmjs.com/package/@wrap-mutant/core)
+[![Downloads](https://img.shields.io/npm/dm/%40wrap-mutant%2Fcore?style=social&logo=npm)](https://www.npmjs.com/package/@wrap-mutant/core)
 
 [![Utils solve some problems](https://img.shields.io/badge/%40wrap--mutant%2Futils-blue.svg?style=social&logo=github)](./packages/utils/)
 [![NPM Version](https://img.shields.io/npm/v/%40wrap-mutant%2Futils?style=social&logo=npm)](https://www.npmjs.com/package/@wrap-mutant/utils)
+[![Downloads](https://img.shields.io/npm/dm/%40wrap-mutant%2Futils?style=social&logo=npm)](https://www.npmjs.com/package/@wrap-mutant/utils)
 
 [![React integration](https://img.shields.io/badge/%40wrap--mutant%2Freact-blue.svg?style=social&logo=github)](./packages/react/)
 [![NPM Version](https://img.shields.io/npm/v/%40wrap-mutant%2Freact?style=social&logo=npm)](https://www.npmjs.com/package/@wrap-mutant/react)
+[![Downloads](https://img.shields.io/npm/dm/%40wrap-mutant%2Freact?style=social&logo=npm)](https://www.npmjs.com/package/@wrap-mutant/react)
 
-[![React. Rendered Array](https://img.shields.io/badge/%40wrap--mutant%2Freact--rendered--array-blue.svg?style=social&logo=github)](./packages/react-renddered-array/)
-[![NPM Version](https://img.shields.io/npm/v/%40wrap-mutant%2Freact-rendered-array?style=social&logo=npm)](https://www.npmjs.com/package/@wrap-mutant/react-renddered-array)
+[![React. Rendered Array](https://img.shields.io/badge/%40wrap--mutant%2Freact--rendered--array-blue.svg?style=social&logo=github)](./packages/react-rendered-array/)
+[![NPM Version](https://img.shields.io/npm/v/%40wrap-mutant%2Freact-rendered-array?style=social&logo=npm)](https://www.npmjs.com/package/@wrap-mutant/react-rendered-array)
+[![Downloads](https://img.shields.io/npm/dm/%40wrap-mutant%2Freact-rendered-array?style=social&logo=npm)](https://www.npmjs.com/package/@wrap-mutant/react-rendered-array)

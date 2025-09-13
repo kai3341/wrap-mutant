@@ -1,6 +1,6 @@
 {
   "name": "@wrap-mutant/react-rendered-array",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Allows to avoid heavy array re-render on each data update",
   "main": "./src/index.ts",
   "scripts": {
@@ -30,7 +30,8 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "@wrap-mutant/react": ">=0.0.2"
+    "@wrap-mutant/react": ">=0.0.2",
+    "sorted-array-type": "^1.3.0"
   },
   "exports": {
     "default": "./src/index.ts",

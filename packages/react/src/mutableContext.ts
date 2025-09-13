@@ -1,14 +1,15 @@
+import { jsx } from "react/jsx-runtime";
 import { createContext, useMemo } from "react";
 import type { ProviderProps, Provider, Context } from "react";
 
 function MutableProvider<T extends {}>(
   this: Provider<T>,
-  { value, children }: ProviderProps<T>,
+  { value: _value, children }: ProviderProps<T>,
 ) {
   const DefaultProvider = this;
-  const memoValue = useMemo(() => value, []);
-  Object.assign(memoValue, value);
-  return <DefaultProvider value={memoValue}>{children}</DefaultProvider>;
+  const value = useMemo(() => _value, []);
+  Object.assign(value, _value);
+  return jsx(DefaultProvider, { value, children });
 }
 
 export function createMutableContext<T extends {}>(defaultValue: T) {

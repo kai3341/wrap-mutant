@@ -1,11 +1,11 @@
 import { originalTargetSymbol, wrappedMetaSymbol } from "./constants";
 
-export type WrapperGenMixin<T> = {
+export type WrapperGenMixin<T extends {}> = {
   [originalTargetSymbol]: HasWrapperGen<T>;
   [wrappedMetaSymbol]: () => HasWrapperGen<T>;
 };
 
-export type HasWrapperGen<T> = T & WrapperGenMixin<T>;
+export type HasWrapperGen<T extends {}> = T & WrapperGenMixin<T>;
 
 type LLNode<T> = {
   value: T;
@@ -16,7 +16,7 @@ type LLHead<T> = {
   head: LLNode<T>;
 };
 
-const toggleCachedGenerator = /*#__PURE__*/ <T extends {}>(head: LLHead<T>) => {
+const toggleCachedGenerator = <T extends {}>(head: LLHead<T>) => {
   return () => {
     const { next, value } = head.head;
     head.head = next;
@@ -24,10 +24,10 @@ const toggleCachedGenerator = /*#__PURE__*/ <T extends {}>(head: LLHead<T>) => {
   };
 };
 
-export const wrapCached = /*#__PURE__*/ <T extends {}>(
+export const wrapCached = <T extends {}>(
   target: T,
   count = 3,
-  options = {},
+  options: ProxyHandler<T> = {},
 ) => {
   const newTarget = target as HasWrapperGen<T>;
   let value = new Proxy(newTarget, options);
@@ -39,10 +39,10 @@ export const wrapCached = /*#__PURE__*/ <T extends {}>(
   }
   last.next = next;
   const head = { head: next } as LLHead<HasWrapperGen<T>>;
+  newTarget[originalTargetSymbol] = newTarget;
   newTarget[wrappedMetaSymbol] = toggleCachedGenerator(head);
   return last.value;
 };
 
-export const toggleCached = /*#__PURE__*/ <T extends {}>(
-  target: HasWrapperGen<T>,
-) => target[wrappedMetaSymbol]();
+export const toggleCached = <T extends {}>(target: HasWrapperGen<T>) =>
+  target[wrappedMetaSymbol]();
